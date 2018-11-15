@@ -1,0 +1,42 @@
+.homepage {
+    min-height: 85vh;
+}
+
+.addArticle {
+    width: 100vw;
+    height: 8vh;
+    line-height: 8vh;
+    text-align: right;
+    padding-right: 10vw;
+}
+
+.articleList {
+    width: 100vw;
+    min-height: 68vh;
+    padding: 1vw 10vw;
+    font-size: 1.1em;
+}
+
+.homepageFooter {
+    width: 100vw;
+    height: 9vh;
+    line-height: 7vh;
+    text-align: center;
+}
+
+.articleTitle {
+    color: black;
+}
+
+.articleTitle:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+.buttonLinkWhite {
+    color: white;
+}
+
+.buttonLinkWhite:hover {
+    color: white;
+}

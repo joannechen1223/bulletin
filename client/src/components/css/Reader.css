@@ -1,0 +1,16 @@
+.reader {
+    padding: 5vh 0;
+}
+
+.readerContent {
+    margin-bottom: 10vh;
+    white-space: pre-line;
+}
+
+.backToList {
+    color: white;
+}
+
+.backToList:hover {
+    color: white;
+}

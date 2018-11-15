@@ -1,0 +1,11 @@
+.appTitle {
+    height: 15vh;
+	margin: 0px auto;
+	padding: 0px;
+	color: #008080;
+    text-align: center;
+    line-height: 15vh;
+	font-family: arial;
+    font-size: 4em;
+    font-weight: bold;
+}
