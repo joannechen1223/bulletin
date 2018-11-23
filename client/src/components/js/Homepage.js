@@ -1,16 +1,66 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination } from 'semantic-ui-react';
+import { Button, Table, Pagination, Card, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
 import '../css/Homepage.css';
 
 class Homepage extends Component {
   constructor() {
     super();
+    this.state = {
+      isLoggedIn: false,
+      userID: '',
+      name: '',
+      email: '',
+      picture: ''
+    }
+
+    this.componentClicked = this.componentClicked.bind(this);
+    this.responseFacebook = this.responseFacebook.bind(this);
+  }
+
+  responseFacebook(res) {
+    console.log(res);
+    this.setState({
+      isLoggedIn: true,
+      userID: res.userID,
+      name: res.name,
+      email: res.email,
+      picture: res.picture.data.url,
+    });
+  }
+
+  componentClicked() {
+    console.log('click');
   }
 
   render() {
+    console.log(this.state);
+    let fbContent;
+    if (this.state.isLoggedIn) {
+      //fbContent = null;
+      fbContent = (<Card>
+        <Card.Content>
+          <Image
+            src={this.state.picture}
+            floated='right'
+          />
+          <Card.Header>{this.state.name}</Card.Header>  
+        </Card.Content>
+      </Card>);
+    } else {
+      fbContent = (
+        <FacebookLogin
+          appId="1845504312225746"
+          autoLoad={false}
+          fields="name,email,picture"
+          onClick={this.componentClicked}
+          callback={this.responseFacebook}
+        />);
+    }
     return (
       <div className="homepage">
+        {fbContent}
         <div className="addArticle">
           <Link to='/editor/0'>
             <Button
