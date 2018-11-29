@@ -3,6 +3,7 @@ import { Switch, BrowserRouter as Router, Route, withRouter } from "react-router
 import Homepage from './Homepage';
 import Reader from './Reader';
 import Editor from './Editor';
+import { FacebookLogin, GoogleLogin } from './Login'
 import '../css/BulletinApp.css';
 
 class BulletinApp extends Component {
@@ -14,7 +15,18 @@ class BulletinApp extends Component {
       articleList: [],
       editMode: 'new',
       newId: 0,
+      user: {
+        isLoggedIn: false,
+        userID: '',
+        name: '',
+        email: '',
+        picture: ''
+      },
     }
+    this.facebookLogin = this.facebookLogin.bind(this);
+    this.googleLogin = this.googleLogin.bind(this);
+    this.facebookLoginCallback = this.facebookLoginCallback.bind(this);
+    this.googleLoginCallback = this.googleLoginCallback.bind(this);
     this.loadArticleList = this.loadArticleList.bind(this);
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     this.handleArticleEdit = this.handleArticleEdit.bind(this);
@@ -25,6 +37,56 @@ class BulletinApp extends Component {
 
   componentWillMount() {
     this.loadArticleList();
+  }
+
+  facebookLogin() {
+    fetch('/facebook')
+      .then((res) => (res.json()))
+      .then((data) => {
+        console.log(data);
+        document.location.href=data.redirectUrl;
+      });
+  }
+
+  googleLogin() {
+    fetch('/google')
+      .then((res) => (res.json()))
+      .then((data) => {
+        console.log(data.redirectUrl);
+        document.location.href=data.redirectUrl;
+      });
+  }
+
+  facebookLoginCallback(data) {
+    //window.location.href = '/';
+    console.log('in facebookLoginCallback');
+    console.log(data);
+    this.setState({
+      user: {
+        isLoggedIn: true,
+        userID: data.id,
+        name: data.name,
+        //email: data.email,
+        picture: data.picture.data.url,
+      }
+    });
+  }
+
+  googleLoginCallback(data) {
+    //window.location.href = '/';
+    console.log('in googleLoginCallback');
+    console.log(data);
+    /*
+    this.setState({
+      user: {
+        isLoggedIn: true,
+        userID: data.id,
+        name: data.name,
+        //email: data.email,
+        picture: data.picture.data.url,
+      }
+    });
+    */
   }
 
   loadArticleList() {
@@ -120,6 +182,8 @@ class BulletinApp extends Component {
   }
   
   render() {
+    console.log(this.state.user);
+    
     return (
       <div className="bullitinApp">
         <div className="appTitle">Bulletin</div>
@@ -129,6 +193,8 @@ class BulletinApp extends Component {
               <Homepage 
                 {...this.state} 
                 totalPage={this.state.totalPages}
+                googleLogin={this.googleLogin}
+                facebookLogin={this.facebookLogin}
                 loadArticleList={this.loadArticleList}
                 handlePaginationChange={this.handlePaginationChange}
                 handleArticleEdit={this.handleArticleEdit}
@@ -154,6 +220,14 @@ class BulletinApp extends Component {
                   handleArticleSubmit={this.handleArticleSubmit}
                 />
               );}} />
+            <Route path="/facebook/callback" render={() => (
+              <FacebookLogin 
+                facebookLoginCallback={this.facebookLoginCallback}
+              />)} />
+            <Route path="/google/callback" render={() => (
+              <GoogleLogin 
+                googleLoginCallback={this.googleLoginCallback}
+              />)} />
           </Switch>
         </Router>
       </div>

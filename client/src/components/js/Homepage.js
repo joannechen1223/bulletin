@@ -1,73 +1,72 @@
 import React, { Component } from 'react';
-import { Button, Table, Pagination, Card, Image } from 'semantic-ui-react';
+import { Button, Table, Pagination, Icon, Grid, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import FacebookLogin from 'react-facebook-login';
+//import FacebookLogin from 'react-facebook-login';
 import '../css/Homepage.css';
 
 class Homepage extends Component {
   constructor() {
     super();
-    this.state = {
-      isLoggedIn: false,
-      userID: '',
-      name: '',
-      email: '',
-      picture: ''
-    }
 
-    this.componentClicked = this.componentClicked.bind(this);
-    this.responseFacebook = this.responseFacebook.bind(this);
+    //this.componentClicked = this.componentClicked.bind(this);
+    //this.responseFacebook = this.responseFacebook.bind(this);
   }
 
-  responseFacebook(res) {
-    console.log(res);
-    this.setState({
-      isLoggedIn: true,
-      userID: res.userID,
-      name: res.name,
-      email: res.email,
-      picture: res.picture.data.url,
-    });
-  }
-
-  componentClicked() {
-    console.log('click');
-  }
+  
 
   render() {
-    console.log(this.state);
+    console.log(this.props.user);
     let fbContent;
-    if (this.state.isLoggedIn) {
+    if (this.props.user.isLoggedIn) {
       //fbContent = null;
-      fbContent = (<Card>
-        <Card.Content>
-          <Image
-            src={this.state.picture}
-            floated='right'
-          />
-          <Card.Header>{this.state.name}</Card.Header>  
-        </Card.Content>
-      </Card>);
+      fbContent = (<Grid>
+        <Grid.Row verticalAlign='middle' columns={2}>
+          <Grid.Column width={2} textAlign='center'>
+            <Image
+              avatar
+              src={this.props.user.picture}
+            />
+          </Grid.Column>
+          <Grid.Column floated='left'>
+            <h4>{`Hello! ${this.props.user.name}`}</h4>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>);
     } else {
       fbContent = (
-        <FacebookLogin
-          appId="1845504312225746"
-          autoLoad={false}
-          fields="name,email,picture"
-          onClick={this.componentClicked}
-          callback={this.responseFacebook}
-        />);
+        //<Link to='/'>
+        <div>
+          <Button
+            color='facebook'
+            size='large'
+            onClick={this.props.facebookLogin}
+          >
+            <Icon name='facebook' /> Facebook Login
+          </Button>
+          <Button
+            color='google plus'
+            size='large'
+            onClick={this.props.googleLogin}
+          >
+            <Icon name='google plus' /> Google Login
+          </Button>
+        </div>);
+        //</Link>);
     }
+    
     return (
       <div className="homepage">
-        {fbContent}
+        <div className="login">
+          {fbContent}
+        </div>
         <div className="addArticle">
           <Link to='/editor/0'>
             <Button
               basic color='teal'
+              size='large'
               onClick={() => {this.props.handleArticleEdit('new');}}
             >
-              + ADD ARTiCLE
+              + ADD ARTICLE
             </Button>
           </Link>
         </div>

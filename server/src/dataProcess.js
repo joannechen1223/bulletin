@@ -26,7 +26,7 @@ export const loadData = (req, res, page) => {
       .count('ID as CNT')
       .then(result => {
         pageCnt = Math.ceil(result[0].CNT/10);
-        console.log(articleList);
+        //console.log(articleList);
         res.json({
           articleList: articleList,
           pageCnt: pageCnt,

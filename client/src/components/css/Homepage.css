@@ -2,12 +2,22 @@
     min-height: 85vh;
 }
 
+.login {
+    width: 50vw;
+    height: 8vh;
+    line-height: 8vh;
+    text-align: left;
+    padding-left: 10vw;
+    float: left;
+}
+
 .addArticle {
-    width: 100vw;
+    width: 50vw;
     height: 8vh;
     line-height: 8vh;
     text-align: right;
     padding-right: 10vw;
+    float: right;
 }
 
 .articleList {

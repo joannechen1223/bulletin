@@ -19,5 +19,9 @@
     "eslint-config-google": "^0.11.0",
     "knex": "^0.15.2",
     "mysql": "^2.16.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "node-fetch": "^2.3.0"
   }
 }

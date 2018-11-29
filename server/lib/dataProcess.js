@@ -30,7 +30,7 @@ var loadData = exports.loadData = function loadData(req, res, page) {
     articleList = changeTimeFormat(JSON.parse(JSON.stringify(result)));
   }).then(knex('ARTICLE').count('ID as CNT').then(function (result) {
     pageCnt = Math.ceil(result[0].CNT / 10);
-    console.log(articleList);
+    //console.log(articleList);
     res.json({
       articleList: articleList,
       pageCnt: pageCnt
